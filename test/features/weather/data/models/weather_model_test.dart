@@ -44,14 +44,14 @@ void main() {
       expect(result.description, equals('scattered clouds'));
     });
 
-    test('toMap and fromMap should serialize and deserialize correctly for Hive cache', () {
-      final map = tWeatherModel.toMap();
-      final fromMapResult = WeatherModel.fromMap(map);
+    test('toJson and fromJson should serialize and deserialize correctly', () {
+      final json = tWeatherModel.toJson();
+      final fromJsonResult = WeatherModel.fromJson(json);
 
-      expect(fromMapResult.city, equals(tWeatherModel.city));
-      expect(fromMapResult.temperature, equals(tWeatherModel.temperature));
-      expect(fromMapResult.humidity, equals(tWeatherModel.humidity));
-      expect(fromMapResult.description, equals(tWeatherModel.description));
+      expect(fromJsonResult.city, equals(tWeatherModel.city));
+      expect(fromJsonResult.temperature, equals(tWeatherModel.temperature));
+      expect(fromJsonResult.humidity, equals(tWeatherModel.humidity));
+      expect(fromJsonResult.description, equals(tWeatherModel.description));
     });
 
     test('toEntity should return a valid WeatherEntity with isCached flag', () {
