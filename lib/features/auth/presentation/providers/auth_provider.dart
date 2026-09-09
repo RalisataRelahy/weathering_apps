@@ -71,23 +71,20 @@ class AuthState {
 }
 
 class AuthController extends StateNotifier<AuthState> {
-  final LoginUseCase _loginUseCase;
-  final RegisterUseCase _registerUseCase;
-  final LogoutUseCase _logoutUseCase;
+  final LoginUseCase loginUseCase;
+  final RegisterUseCase registerUseCase;
+  final LogoutUseCase logoutUseCase;
 
   AuthController({
-    required LoginUseCase loginUseCase,
-    required RegisterUseCase registerUseCase,
-    required LogoutUseCase logoutUseCase,
-  })  : _loginUseCase = loginUseCase,
-        _registerUseCase = registerUseCase,
-        _logoutUseCase = logoutUseCase,
-        super(const AuthState());
+    required this.loginUseCase,
+    required this.registerUseCase,
+    required this.logoutUseCase,
+  }) : super(const AuthState());
 
   Future<bool> login(String email, String password) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final user = await _loginUseCase(email: email, password: password);
+      final user = await loginUseCase(email: email, password: password);
       state = state.copyWith(isLoading: false, user: user);
       return true;
     } catch (e) {
@@ -99,7 +96,7 @@ class AuthController extends StateNotifier<AuthState> {
   Future<bool> register(String email, String password) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final user = await _registerUseCase(email: email, password: password);
+      final user = await registerUseCase(email: email, password: password);
       state = state.copyWith(isLoading: false, user: user);
       return true;
     } catch (e) {
@@ -111,7 +108,7 @@ class AuthController extends StateNotifier<AuthState> {
   Future<void> logout() async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      await _logoutUseCase();
+      await logoutUseCase();
       state = const AuthState();
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());

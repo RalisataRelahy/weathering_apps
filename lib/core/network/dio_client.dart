@@ -14,8 +14,14 @@ class DioClient {
       receiveTimeout: const Duration(seconds: 10),
       contentType: 'application/json',
     );
-    _dio.interceptors.add(AuthInterceptor(secureStorageService: secureStorageService));
+    _dio.interceptors.add(
+      AuthInterceptor(
+        secureStorageService: secureStorageService,
+        dio: _dio,
+      ),
+    );
   }
 
   Dio get dio => _dio;
 }
+
